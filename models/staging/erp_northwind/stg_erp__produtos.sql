@@ -8,12 +8,12 @@ with
             , cast (quantity_per_unit as string) as quantidade_por_unidade
             , cast (unit_price as numeric) as preco_por_unidade
             , cast (units_in_stock as int) as unidades_em_estoque
-            , cast (units_on_order as int) as unidade_por_ordem
-            , cast (reorder_level as int) as nivel_abastecimento
+            , cast (units_on_order as int) as unidades_por_ordem
+            , cast (reorder_level as int) as nivel_reabastecimento
             , case
                 when discontinued = 1 then 'sim'
                 else 'não'
-            end as eh_descontinuado
+            end as eh_discontinuado
 
     from {{ source('erp', 'products') }}
 )
