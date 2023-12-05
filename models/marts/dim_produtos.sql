@@ -1,11 +1,12 @@
 with
     stg_categorias as (
         select
-            id_categoria
-            , nome_categoria
+            id_categoria 
+            , nome_categoria 
             , descricao_categoria
         from {{ ref('stg_erp__categorias') }}
     )
+
     , stg_fornecedores as (
         select
             id_fornecedor
@@ -19,6 +20,7 @@ with
             , cep_fornecedor
         from {{ ref('stg_erp__fornecedores') }}
     )
+
     , stg_produtos as (
         select
             id_produto
@@ -33,6 +35,7 @@ with
             , eh_discontinuado
         from {{ ref('stg_erp__produtos') }}
     )
+
     , joined_tabelas as (
         select
             stg_produtos.id_produto
@@ -54,5 +57,6 @@ with
         left join stg_fornecedores on
             stg_produtos.id_fornecedor = stg_fornecedores.id_fornecedor
     )
+
 select *
 from joined_tabelas

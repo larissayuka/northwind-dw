@@ -17,5 +17,6 @@ with
             , cast(required_date as date) as data_requerida_entrega
         from {{ source('erp', 'orders') }}
     )
+
 select *
 from fonte_ordens

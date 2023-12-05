@@ -9,13 +9,18 @@ with
         from {{ ref('dim_produtos') }}
     )
 
+    , clientes as (
+        select *
+        from {{ ref('dim_clientes') }}
+    )
+
     , int_vendas as (
         select *
         from {{ ref('int_vendas__pedido_itens') }}
     )
 
     , joined_tabelas as (
-        select 
+        select
             int_vendas.sk_pedido_item
             , int_vendas.id_pedido
             , int_vendas.id_funcionario
@@ -45,24 +50,26 @@ with
             , funcionarios.cargo_funcionario
             , funcionarios.dt_nascimento_funcionario
             , funcionarios.dt_contratacao
-
+            , clientes.nome_cliente
         from int_vendas
         left join produtos on
             int_vendas.id_produto = produtos.id_produto
         left join funcionarios on
             int_vendas.id_funcionario = funcionarios.id_funcionario
+        left join clientes on
+            int_vendas.id_cliente = clientes.id_cliente
     )
 
     , transformacoes as (
         select
             *
             , quantidade * preco_da_unidade as total_bruto
-            , quantidade * preco_da_unidade * (1-desconto_perc) as total_liquido
+            , quantidade * preco_da_unidade * (1 - desconto_perc) as total_liquido
             , case
                 when desconto_perc > 0 then 'Sim'
-                else 'Não'
+                else 'Nao'
             end as teve_desconto
-            , frete/count(id_pedido) over (partition by id_pedido) as frete_ponderado
+            , frete / count(id_pedido) over(partition by id_pedido) as frete_ponderado
         from joined_tabelas
     )
 
@@ -104,8 +111,9 @@ with
             , cargo_funcionario
             , dt_nascimento_funcionario
             , dt_contratacao
+            , nome_cliente
         from transformacoes
     )
 
 select *
-from joined_tabelas
+from select_final

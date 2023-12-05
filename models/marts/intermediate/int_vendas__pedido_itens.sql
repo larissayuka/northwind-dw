@@ -3,10 +3,12 @@ with
         select *
         from {{ ref('stg_erp__ordens') }}
     )
+
     , stg_ordem_detalhes as (
         select *
         from {{ ref('stg_erp__ordem_detalhes') }}
     )
+
     , joined_tabelas as (
         select
             stg_ordens.id_pedido
@@ -31,11 +33,13 @@ with
         left join stg_ordens on
             stg_ordem_detalhes.id_pedido = stg_ordens.id_pedido
     )
+
     , criar_chave as (
         select
             cast(id_pedido as string) || '-' || cast(id_produto as string) as sk_pedido_item
             , *
         from joined_tabelas
     )
+
 select *
 from criar_chave

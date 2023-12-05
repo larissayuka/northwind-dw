@@ -1,4 +1,5 @@
 version: 2
+
 models:
   - name: int_vendas__pedido_itens
     description: Modelo intermediário que faz a relação 1-N de pedidos para itens.

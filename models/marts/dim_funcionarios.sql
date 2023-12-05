@@ -1,6 +1,6 @@
 with
     stg_funcionarios as (
-        select 
+        select
             id_funcionario
             , id_gerente
             , nome_funcionario
@@ -15,7 +15,7 @@ with
     )
 
     , self_join_funcionarios as (
-        select 
+        select
             funcionario.id_funcionario
             , funcionario.id_gerente
             , funcionario.nome_funcionario
@@ -32,5 +32,5 @@ with
             funcionario.id_gerente = gerente.id_funcionario
     )
 
-select  * 
+select *
 from self_join_funcionarios

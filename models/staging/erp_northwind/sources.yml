@@ -1,6 +1,7 @@
 version: 2
+
 sources:
-  - name: erp
+  - name: erp 
     description: Fonte SAP de vendas da Northwind
     schema: erp_northwind
     tables:
@@ -10,6 +11,7 @@ sources:
           tests:
             - unique
             - not_null
+    
     - name: categories
     - name: suppliers
     - name: employees
@@ -21,3 +23,4 @@ sources:
             - unique
             - not_null
     - name: order_details
+    - name: customers
